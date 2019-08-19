@@ -4,7 +4,7 @@
 \alias{exceedProb}
 \title{Confidence intervals for the exceedance probability}
 \usage{
-exceedProb(cutoff, theta_hat, sd_hat, d, alpha, n, m, interval = c(-100,
+exceedProb(cutoff, theta_hat, sd_hat, alpha, d, n, m, interval = c(-100,
   100))
 }
 \arguments{
@@ -14,9 +14,9 @@ exceedProb(cutoff, theta_hat, sd_hat, d, alpha, n, m, interval = c(-100,
 
 \item{sd_hat}{Estimated standard deviation for parameter of interest}
 
-\item{d}{Number of parameters in general linear model}
-
 \item{alpha}{Significance level}
+
+\item{d}{Number of parameters in general linear model}
 
 \item{n}{Number of observations in initial study}
 
@@ -33,8 +33,10 @@ This function obtains confidence intervals for exceedance probability
 \examples{
 library(exceedProb)
 
+# Sample mean -----------------------------------------------------------------
 n <- 100
 x <- rnorm(n = n)
+
 theta_hat <- mean(x)
 sd_hat <- sd(x)
 
@@ -43,8 +45,29 @@ cutoff <- seq(from = theta_hat - 0.5, to = theta_hat + 0.5, by = 0.1)
 exceedProb(cutoff = cutoff, 
            theta_hat = theta_hat, 
            sd_hat = sd_hat, 
-           d = 1,
            alpha = 0.05, 
+           d = 1,
+           n = n,
+           m = n)
+
+# Linear regression -----------------------------------------------------------
+n <- 100
+beta <- c(1, 2)
+x <-runif(n = n, min = 0, max = 10)
+y <- rnorm(n = n, mean = cbind(1, x) \%*\% beta, sd = 1)
+
+j <- 2
+fit <- lm(y ~ x)
+theta_hat <- coef(fit)[j]
+sd_hat <- sqrt(n * vcov(fit)[j, j])
+
+cutoff <- seq(from = theta_hat - 0.5, to = theta_hat + 0.5, by = 0.1)
+
+exceedProb(cutoff = cutoff, 
+           theta_hat = theta_hat, 
+           sd_hat = sd_hat, 
+           alpha = 0.05, 
+           d = length(beta),
            n = n,
            m = n)
 }

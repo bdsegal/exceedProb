@@ -20,8 +20,8 @@ tRoot <- function(delta, test_stat, df, conf_level) {
 }
 
 getDeltaCI <- function(test_stat, 
-                  d,
                   alpha, 
+                  d,
                   n, 
                   interval) {
   #' Confidence intervals for noncentrality parameter of t-distribution
@@ -29,8 +29,8 @@ getDeltaCI <- function(test_stat,
   #' This function obtains confidence intervals for the non-centrality
   #' parameter of a t-distribution.
   #' @param test_stat Test statistics
-  #' @param d Number of parameters in general linear model
   #' @param alpha Significance level
+  #' @param d Number of parameters in general linear model
   #' @param n Number of observations in initial study
   #' @param interval Interval within which to search for roots
   #' @return ep Exceedance probability with confidence intervals (vector if cutoff is scalar and matrix otherwise)
@@ -59,8 +59,8 @@ getDeltaCI <- Vectorize(getDeltaCI, vectorize.args = "test_stat")
 exceedProb <- function(cutoff, 
                   theta_hat, 
                   sd_hat, 
-                  d,
                   alpha, 
+                  d,
                   n, 
                   m,
                   interval = c(-100, 100)) {
@@ -79,9 +79,11 @@ exceedProb <- function(cutoff,
   #' @export
   #' @examples
   #' library(exceedProb)
-  #'
+  #' 
+  #' # Sample mean -----------------------------------------------------------------
   #' n <- 100
   #' x <- rnorm(n = n)
+  #' 
   #' theta_hat <- mean(x)
   #' sd_hat <- sd(x)
   #' 
@@ -90,29 +92,62 @@ exceedProb <- function(cutoff,
   #' exceedProb(cutoff = cutoff, 
   #'            theta_hat = theta_hat, 
   #'            sd_hat = sd_hat, 
-  #'            d = 1,
   #'            alpha = 0.05, 
+  #'            d = 1,
+  #'            n = n,
+  #'            m = n)
+  #' 
+  #' # Linear regression -----------------------------------------------------------
+  #' n <- 100
+  #' beta <- c(1, 2)
+  #' x <-runif(n = n, min = 0, max = 10)
+  #' y <- rnorm(n = n, mean = cbind(1, x) %*% beta, sd = 1)
+  #' 
+  #' j <- 2
+  #' fit <- lm(y ~ x)
+  #' theta_hat <- coef(fit)[j]
+  #' sd_hat <- sqrt(n * vcov(fit)[j, j])
+  #' 
+  #' cutoff <- seq(from = theta_hat - 0.5, to = theta_hat + 0.5, by = 0.1)
+  #' 
+  #' exceedProb(cutoff = cutoff, 
+  #'            theta_hat = theta_hat, 
+  #'            sd_hat = sd_hat, 
+  #'            alpha = 0.05, 
+  #'            d = length(beta),
   #'            n = n,
   #'            m = n)
 
-  if (length(theta_hat) != 1) {
-    stop("theta_hat must be a scalar")
+  if (length(cutoff) < 1 | !is.numeric(cutoff)) {
+    stop("cutoff must be numeric a numeric vector with at least 1 element")
   }
 
-  if (length(sd_hat) != 1) {
-    stop("sd_hat must be a scalar")
+  if (length(theta_hat) != 1 | !is.numeric(theta_hat)) {
+    stop("theta_hat must be numeric scalar")
   }
 
-  if (length(d) != 1) {
-    stop("d must be a scalar")
+  if (length(sd_hat) != 1 | !is.numeric(sd_hat)) {
+    stop("sd_hat must be numeric scalar")
   }
 
-  if (length(n) != 1) {
-    stop("n must be a scalar")
+  if (length(d) != 1 | !is.numeric(d)) {
+    stop("d must be numeric scalar")
   }
 
-  if (length(m) != 1) {
-    stop("m must be a scalar")
+  if (length(n) != 1 | !is.numeric(n)) {
+    stop("n must be numeric scalar")
+  }
+
+  if (length(m) != 1 | !is.numeric(m)) {
+    stop("m must be numeric scalar")
+  }
+
+  if (length(interval) != 2 | !is.numeric(interval)) {
+    stop("interval must be a numeric vector of length 2")
+  }
+
+  if (diff(interval) <= 0) {
+    stop("interval must have the form (a, b) for a < b")
   }
 
   test_stat <- sqrt(n) * (cutoff - theta_hat) / sd_hat
@@ -128,8 +163,7 @@ exceedProb <- function(cutoff,
   point <- stats::pnorm(q = sqrt(m) * (cutoff - theta_hat) / sd_hat, lower.tail = FALSE)
 
   ep <- data.frame(cutoff = cutoff, point = point, lower = lower, upper = upper)
+  rownames(ep) <- NULL
+
   return(ep)
 }
-
-
-  

@@ -4,14 +4,14 @@
 \alias{getDeltaCI}
 \title{Confidence intervals for noncentrality parameter of t-distribution}
 \usage{
-getDeltaCI(test_stat, d, alpha, n, interval)
+getDeltaCI(test_stat, alpha, d, n, interval)
 }
 \arguments{
 \item{test_stat}{Test statistics}
 
-\item{d}{Number of parameters in general linear model}
-
 \item{alpha}{Significance level}
+
+\item{d}{Number of parameters in general linear model}
 
 \item{n}{Number of observations in initial study}
 

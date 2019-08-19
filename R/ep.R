@@ -63,7 +63,8 @@ exceedProb <- function(cutoff,
                   d,
                   n, 
                   m,
-                  interval = c(-100, 100)) {
+                  interval = c(-100, 100),
+                  lower_tail = FALSE) {
   #' Confidence intervals for the exceedance probability
   #'
   #' This function obtains confidence intervals for exceedance probability
@@ -75,6 +76,7 @@ exceedProb <- function(cutoff,
   #' @param n Number of observations in the initial study
   #' @param m Number of observations in the replication study
   #' @param interval Interval within which to search for roots
+  #' @param lower_tail If TRUE, reports lower tail probabilities
   #' @return ep Exceedance probability with confidence intervals
   #' @export
   #' @examples
@@ -150,6 +152,10 @@ exceedProb <- function(cutoff,
     stop("interval must have the form (a, b) for a < b")
   }
 
+  if(!is.logical(lower_tail) | length(lower_tail) != 1) {
+    stop("lower_tail must be a logical scalar")
+  }
+
   test_stat <- sqrt(n) * (cutoff - theta_hat) / sd_hat
 
   delta_ci <- getDeltaCI(test_stat = test_stat,
@@ -158,9 +164,17 @@ exceedProb <- function(cutoff,
                          n = n,
                          interval = interval)
 
-  lower <- stats::pnorm(sqrt(m/n) * delta_ci["upper", ], lower.tail = FALSE)
-  upper <- stats::pnorm(sqrt(m/n) * delta_ci["lower", ], lower.tail = FALSE)
-  point <- stats::pnorm(q = sqrt(m) * (cutoff - theta_hat) / sd_hat, lower.tail = FALSE)
+  if (lower_tail) {
+
+    lower <- stats::pnorm(sqrt(m/n) * delta_ci["lower", ], lower.tail = TRUE)
+    upper <- stats::pnorm(sqrt(m/n) * delta_ci["upper", ], lower.tail = TRUE)
+    point <- stats::pnorm(q = sqrt(m) * (cutoff - theta_hat) / sd_hat, lower.tail = TRUE)
+  } else {
+
+    lower <- stats::pnorm(sqrt(m/n) * delta_ci["upper", ], lower.tail = FALSE)
+    upper <- stats::pnorm(sqrt(m/n) * delta_ci["lower", ], lower.tail = FALSE)
+    point <- stats::pnorm(q = sqrt(m) * (cutoff - theta_hat) / sd_hat, lower.tail = FALSE)
+  }
 
   ep <- data.frame(cutoff = cutoff, point = point, lower = lower, upper = upper)
   rownames(ep) <- NULL

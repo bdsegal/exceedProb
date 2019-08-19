@@ -5,7 +5,7 @@
 \title{Confidence intervals for the exceedance probability}
 \usage{
 exceedProb(cutoff, theta_hat, sd_hat, alpha, d, n, m, interval = c(-100,
-  100))
+  100), lower_tail = FALSE)
 }
 \arguments{
 \item{cutoff}{Cutoff values (scalar or vector)}
@@ -23,6 +23,8 @@ exceedProb(cutoff, theta_hat, sd_hat, alpha, d, n, m, interval = c(-100,
 \item{m}{Number of observations in the replication study}
 
 \item{interval}{Interval within which to search for roots}
+
+\item{lower_tail}{If TRUE, reports lower tail probabilities}
 }
 \value{
 ep Exceedance probability with confidence intervals

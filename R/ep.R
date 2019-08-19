@@ -68,19 +68,19 @@ exceedProb <- function(cutoff,
   #'
   #' This function obtains confidence intervals for exceedance probability
   #' @param cutoff Cutoff values (scalar or vector)
-  #' @param theta_hat Point estimate of parameter of interest
-  #' @param sd_hat Estimated standard deviation for parameter of interest
-  #' @param d Number of parameters in general linear model
+  #' @param theta_hat Point estimate for the parameter of interest
+  #' @param sd_hat Estimated standard deviation for the parameter of interest (Note: not the standard error)
+  #' @param d Number of parameters in the general linear model
   #' @param alpha Significance level
-  #' @param n Number of observations in initial study
-  #' @param m Number of observations in replication study
+  #' @param n Number of observations in the initial study
+  #' @param m Number of observations in the replication study
   #' @param interval Interval within which to search for roots
-  #' @return ep Exceedance probability with confidence intervals (vector if cutoff is scalar and matrix otherwise)
+  #' @return ep Exceedance probability with confidence intervals
   #' @export
   #' @examples
   #' library(exceedProb)
   #' 
-  #' # Sample mean -----------------------------------------------------------------
+  #' # Sample mean -------------------------------------------------------
   #' n <- 100
   #' x <- rnorm(n = n)
   #' 
@@ -97,7 +97,7 @@ exceedProb <- function(cutoff,
   #'            n = n,
   #'            m = n)
   #' 
-  #' # Linear regression -----------------------------------------------------------
+  #' # Linear regression -------------------------------------------------
   #' n <- 100
   #' beta <- c(1, 2)
   #' x <-runif(n = n, min = 0, max = 10)

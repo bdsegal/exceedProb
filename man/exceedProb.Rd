@@ -10,22 +10,22 @@ exceedProb(cutoff, theta_hat, sd_hat, alpha, d, n, m, interval = c(-100,
 \arguments{
 \item{cutoff}{Cutoff values (scalar or vector)}
 
-\item{theta_hat}{Point estimate of parameter of interest}
+\item{theta_hat}{Point estimate for the parameter of interest}
 
-\item{sd_hat}{Estimated standard deviation for parameter of interest}
+\item{sd_hat}{Estimated standard deviation for the parameter of interest (Note: not the standard error)}
 
 \item{alpha}{Significance level}
 
-\item{d}{Number of parameters in general linear model}
+\item{d}{Number of parameters in the general linear model}
 
-\item{n}{Number of observations in initial study}
+\item{n}{Number of observations in the initial study}
 
-\item{m}{Number of observations in replication study}
+\item{m}{Number of observations in the replication study}
 
 \item{interval}{Interval within which to search for roots}
 }
 \value{
-ep Exceedance probability with confidence intervals (vector if cutoff is scalar and matrix otherwise)
+ep Exceedance probability with confidence intervals
 }
 \description{
 This function obtains confidence intervals for exceedance probability
@@ -33,7 +33,7 @@ This function obtains confidence intervals for exceedance probability
 \examples{
 library(exceedProb)
 
-# Sample mean -----------------------------------------------------------------
+# Sample mean -------------------------------------------------------
 n <- 100
 x <- rnorm(n = n)
 
@@ -50,7 +50,7 @@ exceedProb(cutoff = cutoff,
            n = n,
            m = n)
 
-# Linear regression -----------------------------------------------------------
+# Linear regression -------------------------------------------------
 n <- 100
 beta <- c(1, 2)
 x <-runif(n = n, min = 0, max = 10)

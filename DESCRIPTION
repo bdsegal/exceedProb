@@ -1,12 +1,11 @@
 Package: exceedProb
 Version: 0.0.1
 Date: 2019-08-19
-Title: Confidence Intervals for the Exceedance Probability
+Title: Confidence Intervals for Exceedance Probability
 Description: Computes exceedance probabilities and associated confidence intervals. Currently only supports general linear models.
 Depends: R (>= 3.1)
 Imports: Rcpp (>= 1.0.2)
 LinkingTo: Rcpp, BH
-Suggests: ggplot2
 Authors@R: person(given = "Brian D.", family = "Segal", email = "segal.brian@gmail.com", role = c("aut", "cre"))
 Author: Brian D. Segal [aut, cre]
 Maintainer: Brian D. Segal <segal.brian@gmail.com>

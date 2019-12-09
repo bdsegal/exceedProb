@@ -165,12 +165,10 @@ exceedProb <- function(cutoff,
                          interval = interval)
 
   if (lower_tail) {
-
     lower <- stats::pnorm(sqrt(m/n) * delta_ci["lower", ], lower.tail = TRUE)
     upper <- stats::pnorm(sqrt(m/n) * delta_ci["upper", ], lower.tail = TRUE)
     point <- stats::pnorm(q = sqrt(m) * (cutoff - theta_hat) / sd_hat, lower.tail = TRUE)
   } else {
-
     lower <- stats::pnorm(sqrt(m/n) * delta_ci["upper", ], lower.tail = FALSE)
     upper <- stats::pnorm(sqrt(m/n) * delta_ci["lower", ], lower.tail = FALSE)
     point <- stats::pnorm(q = sqrt(m) * (cutoff - theta_hat) / sd_hat, lower.tail = FALSE)

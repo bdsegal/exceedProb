@@ -53,4 +53,4 @@ exceedProb(cutoff = cutoff,
 
 ## References
 
-Segal, B. D. (2019). Towards replicability with confidence intervals for the exceedance probability. The American Statistician. [doi.org/10.1080/00031305.2019.1678521](https://www.tandfonline.com/eprint/SUPYJD7NHZMHMNNH5VHU/full?target=10.1080/00031305.2019.1678521)
+Segal, B. D. (2019). Toward replicability with confidence intervals for the exceedance probability. The American Statistician. [doi.org/10.1080/00031305.2019.1678521](https://www.tandfonline.com/eprint/SUPYJD7NHZMHMNNH5VHU/full?target=10.1080/00031305.2019.1678521)

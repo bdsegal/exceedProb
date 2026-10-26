@@ -4,8 +4,11 @@ This R package computes exceedance probabilities and associated confidence inter
 ## Installation
 
 ```{r}
-install.packages("exceedProb")
-```
+# install.packages("remotes")
+remotes::install_github("bdsegal/exceedProb")
+````
+
+The package contains compiled code, so you will need a C++ compiler (e.g., [Rtools](https://cran.r-project.org/bin/windows/Rtools/) on Windows or the Xcode command line tools on macOS).
 
 ## Examples
 
